@@ -1,5 +1,16 @@
 apiVersion: v2
-name: guestbook
-description: Sample application
-version: 0.0.0
-appVersion: 0.0.0
+name: postgres-cluster
+description: PostgreSQL cluster using CloudNativePG
+version: 0.1.0
+appVersion: "17.5"
+home: https://cloudnative-pg.io/
+sources:
+  - https://github.com/cloudnative-pg/cloudnative-pg
+keywords:
+  - postgresql
+  - database
+  - cluster
+  - cloudnative-pg
+maintainers:
+  - name: Claude
+    email: claude@anthropic.com

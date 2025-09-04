@@ -1,9 +1,12 @@
-namespace: database
+namespace: database-apps
 targetCustomizations:
 - name: dev
   helm:
     values:
-      replication: false
+      replicas: 1
+      serviceType: NodePort
+      storageSize: "10Gi"
+      enableMonitoring: false
   clusterSelector:
     matchLabels:
       env: dev
@@ -11,7 +14,10 @@ targetCustomizations:
 - name: test
   helm:
     values:
-      replicas: 3
+      replicas: 2
+      serviceType: NodePort
+      storageSize: "20Gi"
+      enableMonitoring: true
   clusterSelector:
     matchLabels:
       env: test
@@ -19,8 +25,14 @@ targetCustomizations:
 - name: prod
   helm:
     values:
-      serviceType: LoadBalancer
       replicas: 3
+      serviceType: LoadBalancer
+      storageSize: "50Gi"
+      enableMonitoring: true
+      memoryRequest: "1Gi"
+      memoryLimit: "2Gi"
+      cpuRequest: "1000m"
+      cpuLimit: "2000m"
   clusterSelector:
     matchLabels:
       env: prod

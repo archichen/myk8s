@@ -1,3 +1,31 @@
-replication: true
+# PostgreSQL Cluster Configuration
+clusterName: "postgres-cluster"
+namespace: "database-apps"
+
+# Database Configuration
+database: "appdb"
+owner: "appuser"
+username: "appuser"
+password: "changeme123"
+secretName: "postgres-secret"
+
+# Cluster Configuration
 replicas: 1
-serviceType: NodePort
+storageSize: "20Gi"
+storageClass: ""
+
+# Service Configuration
+serviceType: "NodePort"
+
+# Resource Configuration
+memoryRequest: "512Mi"
+memoryLimit: "1Gi"
+cpuRequest: "500m"
+cpuLimit: "1000m"
+
+# PostgreSQL Configuration
+sharedBuffers: "128MB"
+maxConnections: "100"
+
+# Monitoring Configuration
+enableMonitoring: false

@@ -1,0 +1,52 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Values.clusterName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  instances: {{ .Values.replicas }}
+  
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5
+  
+  bootstrap:
+    initdb:
+      database: {{ .Values.database }}
+      owner: {{ .Values.owner }}
+      secret:
+        name: {{ .Values.secretName }}
+  
+  storage:
+    size: {{ .Values.storageSize }}
+    storageClass: {{ .Values.storageClass }}
+  
+  resources:
+    requests:
+      memory: {{ .Values.memoryRequest }}
+      cpu: {{ .Values.cpuRequest }}
+    limits:
+      memory: {{ .Values.memoryLimit }}
+      cpu: {{ .Values.cpuLimit }}
+  
+  service:
+    type: {{ .Values.serviceType }}
+    port: 5432
+  
+  monitoring:
+    enablePodMonitor: {{ .Values.enableMonitoring }}
+  
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: preferred
+  
+  postgresql:
+    parameters:
+      shared_buffers: {{ .Values.sharedBuffers }}
+      max_connections: {{ .Values.maxConnections }}
+      wal_level: logical
+      hot_standby: on
+      max_wal_senders: 3
+      max_replication_slots: 3
+    pg_hba:
+      - host all all 0.0.0.0/0 md5
+      - host replication all 0.0.0.0/0 md5
