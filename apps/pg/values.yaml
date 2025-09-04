@@ -16,6 +16,7 @@ storageClass: ""
 
 # Service Configuration
 serviceType: "NodePort"
+servicePort: "5432"
 
 # Resource Configuration
 memoryRequest: "512Mi"

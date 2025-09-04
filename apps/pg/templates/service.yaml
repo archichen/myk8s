@@ -10,7 +10,7 @@ spec:
   type: {{ .Values.serviceType }}
   ports:
   - name: postgresql
-    port: 5432
+    port: {{ .Values.servicePort | default "5432" }}
     targetPort: 5432
   selector:
     app: {{ .Values.clusterName }}

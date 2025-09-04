@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.clusterName }}
   namespace: {{ .Values.namespace }}
 spec:
-  instances: {{ .Values.replicas }}
+  instances: {{ .Values.replicas | quote }}
   
   imageName: ghcr.io/cloudnative-pg/postgresql:17.5
   
@@ -29,13 +29,13 @@ spec:
   
   service:
     type: {{ .Values.serviceType }}
-    port: 5432
+    port: {{ .Values.servicePort | default "5432" }}
   
   monitoring:
     enablePodMonitor: {{ .Values.enableMonitoring }}
   
   affinity:
-    enablePodAntiAffinity: {{ .Values.enablePodAntiAffinity | default "true" }}
+    enablePodAntiAffinity: {{ .Values.enablePodAntiAffinity | default true }}
     topologyKey: kubernetes.io/hostname
     podAntiAffinityType: preferred
   
