@@ -1,6 +1,6 @@
 # manifests/cloudnative-pg/fleet.yaml
 # 目标：在所有纳管的集群中安装 CloudNativePG Operator
-
+name: "cloudnative-pg-bundle"
 # 默认将资源部署在哪个命名空间
 defaultNamespace: cnpg-system
 
