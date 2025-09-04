@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.clusterName }}
   namespace: {{ .Values.namespace }}
 spec:
-  instances: {{ .Values.replicas | quote }}
+  instances: {{ .Values.replicas }}
   
   imageName: ghcr.io/cloudnative-pg/postgresql:17.5
   
@@ -41,8 +41,8 @@ spec:
   
   postgresql:
     parameters:
-      shared_buffers: {{ .Values.sharedBuffers }}
-      max_connections: {{ .Values.maxConnections }}
+      shared_buffers: "{{ .Values.sharedBuffers }}"
+      max_connections: "{{ .Values.maxConnections }}"
       wal_level: "logical"
       hot_standby: "on"
       max_wal_senders: "3"
