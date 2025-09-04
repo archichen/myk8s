@@ -1,0 +1,21 @@
+# manifests/cloudnative-pg/fleet.yaml
+
+# ------------------
+# 新增的部分
+# ------------------
+# 为这个 Fleet Bundle 指定一个唯一的名称。
+# 这个名称将用于被其他 Bundle 依赖 (dependsOn)。
+name: "cloudnative-pg-bundle"
+# ------------------
+
+# 目标：在所有纳管的集群中安装 CloudNativePG Operator
+defaultNamespace: cnpg-system
+
+# helm 定义了这是一个 Helm Chart 部署
+helm:
+  repo: "https://cloudnative-pg.github.io/charts"
+  chart: "cloudnative-pg"
+  # 指定一个固定的 Chart 版本，这是最佳实践
+  version: "0.21.3"
+  # 如果命名空间不存在，则创建它
+  createNamespace: true
