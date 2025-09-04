@@ -12,8 +12,8 @@ defaultNamespace: "database-apps"
 
 # 确保在部署前，CloudNativePG Operator 已经就绪
 # 这是关键！它告诉 Fleet，必须先等名为 "cloudnative-pg-bundle" 的部署成功后，才能执行此文件。
-dependsOn:
-  - name: "cloudnative-pg-bundle" # <-- 请确保这个名字与你部署Operator的fleet.yaml中定义的name一致
+# dependsOn:
+#   - name: "cloudnative-pg-bundle" # <-- 请确保这个名字与你部署Operator的fleet.yaml中定义的name一致
 
 # 目标集群：我们只希望这个测试数据库部署到开发环境
 # 如果你想部署到所有集群，可以删除 targetCustomizations 整块内容
