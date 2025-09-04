@@ -29,3 +29,6 @@ maxConnections: "100"
 
 # Monitoring Configuration
 enableMonitoring: false
+
+# Affinity Configuration
+enablePodAntiAffinity: true
