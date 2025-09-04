@@ -6,7 +6,7 @@ namespace: "database-apps"
 database: "appdb"
 owner: "appuser"
 username: "appuser"
-password: "changeme123"
+password: "CHENdashi007."
 secretName: "postgres-secret"
 
 # Cluster Configuration

@@ -1,11 +1,26 @@
-# This is a minimal test file for debugging.
-name: "test-pg-bundle-is-recognized"
-defaultNamespace: "fleet-debug-test"
+namespace: database
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      replication: false
+  clusterSelector:
+    matchLabels:
+      env: dev
 
-yaml:
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: fleet-debug-cm
-  data:
-    message: "Success! Fleet can see this file."
+- name: test
+  helm:
+    values:
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: test
+
+- name: prod
+  helm:
+    values:
+      serviceType: LoadBalancer
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: prod
