@@ -1,45 +1,26 @@
-# apps/my-first-database/fleet.yaml
-#
-# 目标：使用已经部署好的 CloudNativePG Operator，
-# 在所有“开发(development)”环境的集群中，创建一个高可用的 PostgreSQL 数据库。
-#
+namespace: database
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      replication: false
+  clusterSelector:
+    matchLabels:
+      env: dev
 
-# 定义一个 Bundle 的元数据，方便我们添加依赖关系
-name: "pg-bundle"
+- name: test
+  helm:
+    values:
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: test
 
-# 这个数据库实例应该部署在哪个命名空间
-defaultNamespace: "database-apps"
-
-# 确保在部署前，CloudNativePG Operator 已经就绪
-# 这是关键！它告诉 Fleet，必须先等名为 "cloudnative-pg-bundle" 的部署成功后，才能执行此文件。
-# dependsOn:
-#   - name: "cloudnative-pg-bundle" # <-- 请确保这个名字与你部署Operator的fleet.yaml中定义的name一致
-
-# 目标集群：我们只希望这个测试数据库部署到开发环境
-# 如果你想部署到所有集群，可以删除 targetCustomizations 整块内容
-# targetCustomizations:
-# - name: "deploy-only-to-dev"
-#   # 使用集群标签来选择目标集群
-#   clusterSelector:
-#     matchLabels:
-#       env: development
-
-# 我们要部署的不再是 Helm Chart，而是 Kubernetes 原生 YAML
-yaml:
-  # 这里的内容就是你之前手动测试时用的 postgres-test.yaml
-  apiVersion: postgresql.cnpg.io/v1
-  kind: Cluster
-  metadata:
-    name: pg-database  # 数据库集群的名称
-  spec:
-    # 实例数量，1个代表一个单节点集群
-    instances: 1
-
-    # 定义存储规格
-    storage:
-      size: "20Gi" # 为每个实例分配 20Gi 的存储
-
-    # 其他可选的高级配置...
-    # 例如，指定 PostgreSQL 的主要版本
-    # postgresql:
-    #   major: 14
+- name: prod
+  helm:
+    values:
+      serviceType: LoadBalancer
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: prod
