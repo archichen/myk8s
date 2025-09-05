@@ -1,0 +1,74 @@
+# apps/kong/fleet.yaml
+
+# 目标命名空间
+namespace: kong-apps
+
+# 目标定制化：针对不同环境进行配置
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      # 开发环境配置
+      replicas: 1
+      serviceType: NodePort
+      adminNodePort: 32001
+      proxyHttpNodePort: 32000
+      proxyHttpsNodePort: 32010
+      enableMonitoring: false
+      enableTLS: false
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+  clusterSelector:
+    matchLabels:
+      env: dev
+
+- name: test
+  helm:
+    values:
+      # 测试环境配置
+      replicas: 1
+      serviceType: NodePort
+      adminNodePort: 32001
+      proxyHttpNodePort: 32000
+      proxyHttpsNodePort: 32010
+      enableMonitoring: true
+      enableTLS: true
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "512Mi"
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
+  clusterSelector:
+    matchLabels:
+      env: test
+
+- name: prod
+  helm:
+    values:
+      # 生产环境配置
+      replicas: 1
+      serviceType: LoadBalancer
+      enableMonitoring: true
+      enableTLS: true
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+        limits:
+          cpu: "2000m"
+          memory: "2Gi"
+      # 生产环境特定的安全配置
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+  clusterSelector:
+    matchLabels:
+      env: prod

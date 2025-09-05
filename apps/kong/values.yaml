@@ -1,0 +1,101 @@
+# Kong Gateway 默认配置
+
+# 副本数量
+replicas: 1
+
+# 服务类型
+serviceType: NodePort
+
+# 端口配置
+adminNodePort: 32001
+proxyHttpNodePort: 32000
+proxyHttpsNodePort: 32010
+
+# 监控配置
+enableMonitoring: false
+
+# TLS 配置
+enableTLS: false
+
+# 资源配置
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+# Pod 安全上下文
+podSecurityContext: {}
+
+# Kong 配置
+kong:
+  enabled: true
+  
+  # 镜像配置
+  image:
+    repository: kong/kong-gateway
+    tag: "3.6.0"
+    pullPolicy: IfNotPresent
+  
+  # 数据库配置（无数据库模式）
+  database: "off"
+  
+  # 环境变量
+  env:
+    database: "off"
+    role: "control_plane"
+    nginx_worker_processes: "1"
+    proxy_access_log: /dev/stdout
+    admin_access_log: /dev/stdout
+    proxy_error_log: /dev/stderr
+    admin_error_log: /dev/stderr
+    
+  # 管理员配置
+  admin:
+    enabled: true
+    type: NodePort
+    nodePort: {{ .Values.adminNodePort }}
+    
+  # 代理配置
+  proxy:
+    enabled: true
+    type: NodePort
+    http:
+      nodePort: {{ .Values.proxyHttpNodePort }}
+    https:
+      nodePort: {{ .Values.proxyHttpsNodePort }}
+  
+  # 运行时配置
+  runMigrations: true
+  
+  # Ingress Controller 配置
+  ingressController:
+    enabled: true
+    installCRDs: true
+    
+  # 资源配置
+  deployment:
+    kong:
+      resources:
+        requests:
+          cpu: {{ .Values.resources.requests.cpu }}
+          memory: {{ .Values.resources.requests.memory }}
+        limits:
+          cpu: {{ .Values.resources.limits.cpu }}
+          memory: {{ .Values.resources.limits.memory }}
+      podSecurityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+
+# PostgreSQL 配置（禁用）
+postgresql:
+  enabled: false
+
+# Prometheus 配置
+prometheus:
+  enabled: {{ .Values.enableMonitoring }}
+
+# Service Monitor 配置
+serviceMonitor:
+  enabled: {{ .Values.enableMonitoring }}
+  namespace: kong-apps

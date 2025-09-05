@@ -22,17 +22,17 @@ targetCustomizations:
     matchLabels:
       env: test
 
-# - name: prod
-#   helm:
-#     values:
-#       replicas: 1
-#       serviceType: LoadBalancer
-#       storageSize: "50Gi"
-#       enableMonitoring: true
-#       memoryRequest: "1Gi"
-#       memoryLimit: "2Gi"
-#       cpuRequest: "1000m"
-#       cpuLimit: "2000m"
-#   clusterSelector:
-#     matchLabels:
-#       env: prod
+- name: prod
+  helm:
+    values:
+      replicas: 1
+      serviceType: LoadBalancer
+      storageSize: "50Gi"
+      enableMonitoring: true
+      memoryRequest: "1Gi"
+      memoryLimit: "2Gi"
+      cpuRequest: "1000m"
+      cpuLimit: "2000m"
+  clusterSelector:
+    matchLabels:
+      env: prod
