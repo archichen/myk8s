@@ -75,8 +75,8 @@ helm:
         repository: kong/kubernetes-ingress-controller
         tag: "3.1.0"
       
-      # 安装 CRDs (由应用 Bundle 安装)
-      installCRDs: false
+      # 安装 CRDs (由 Operator Bundle 安装)
+      installCRDs: true
       
       # 资源限制
       resources:
