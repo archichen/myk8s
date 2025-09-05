@@ -57,16 +57,16 @@ kong:
   admin:
     enabled: true
     type: NodePort
-    nodePort: {{ .Values.adminNodePort }}
+    nodePort: 32001
     
   # 代理配置
   proxy:
     enabled: true
     type: NodePort
     http:
-      nodePort: {{ .Values.proxyHttpNodePort }}
+      nodePort: 32000
     https:
-      nodePort: {{ .Values.proxyHttpsNodePort }}
+      nodePort: 32010
   
   # 运行时配置
   runMigrations: true
@@ -81,12 +81,13 @@ kong:
     kong:
       resources:
         requests:
-          cpu: {{ .Values.resources.requests.cpu }}
-          memory: {{ .Values.resources.requests.memory }}
+          cpu: "100m"
+          memory: "256Mi"
         limits:
-          cpu: {{ .Values.resources.limits.cpu }}
-          memory: {{ .Values.resources.limits.memory }}
-      podSecurityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+          cpu: "500m"
+          memory: "512Mi"
+      podSecurityContext:
+        fsGroup: 2000
 
 # PostgreSQL 配置（禁用）
 postgresql:
@@ -94,9 +95,9 @@ postgresql:
 
 # Prometheus 配置
 prometheus:
-  enabled: {{ .Values.enableMonitoring }}
+  enabled: false
 
 # Service Monitor 配置
 serviceMonitor:
-  enabled: {{ .Values.enableMonitoring }}
+  enabled: false
   namespace: kong-apps
