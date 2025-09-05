@@ -1,7 +1,7 @@
 # apps/kong/fleet.yaml
 
 # 目标命名空间
-namespace: kong-apps
+defaultNamespace: kong-apps
 
 # 目标定制化：针对不同环境进行配置
 targetCustomizations:
