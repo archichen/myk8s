@@ -27,12 +27,13 @@ resources:
     memory: "512Mi"
 
 # Pod 安全上下文
-podSecurityContext: {}
+podSecurityContext:
+  fsGroup: 2000
 
 # Kong 配置
 kong:
   enabled: true
-  
+
   # 镜像配置
   image:
     repository: kong/kong-gateway
