@@ -14,7 +14,7 @@ targetCustomizations:
 - name: test
   helm:
     values:
-      replicas: 2
+      replicas: 1
       serviceType: NodePort
       storageSize: "20Gi"
       enableMonitoring: true
@@ -25,7 +25,7 @@ targetCustomizations:
 - name: prod
   helm:
     values:
-      replicas: 3
+      replicas: 1
       serviceType: LoadBalancer
       storageSize: "50Gi"
       enableMonitoring: true
