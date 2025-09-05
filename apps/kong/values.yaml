@@ -74,7 +74,7 @@ kong:
   # Ingress Controller 配置
   ingressController:
     enabled: true
-    installCRDs: true
+    installCRDs: false
     
   # 资源配置
   deployment:
