@@ -27,7 +27,7 @@ cpuLimit: "1000m"
 # PostgreSQL Configuration
 sharedBuffers: "128MB"
 maxConnections: "100"
-maxWalSenders: "3"
+maxWalSenders: "6"
 maxReplicationSlots: "3"
 
 # Monitoring Configuration
