@@ -28,7 +28,7 @@ cpuLimit: "1000m"
 sharedBuffers: "128MB"
 maxConnections: "100"
 maxWalSenders: "6"
-maxReplicationSlots: "3"
+maxReplicationSlots: "6"
 
 # Monitoring Configuration
 enableMonitoring: false
